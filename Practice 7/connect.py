@@ -5,5 +5,5 @@ def connect():
         host="localhost",
         database="phonebook_db",
         user="postgres",
-        password="your_password"
+        password="12345678"
     )

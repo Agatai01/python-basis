@@ -1,4 +1,4 @@
--- 🔄 UPSERT
+--  UPSERT
 CREATE OR REPLACE PROCEDURE upsert_contact_2(p_name TEXT, p_phone TEXT)
 LANGUAGE plpgsql AS $$
 BEGIN
@@ -13,7 +13,7 @@ BEGIN
 END;
 $$;
 
--- 📥 BULK INSERT (loop + validation)
+--  BULK INSERT (loop + validation)
 CREATE OR REPLACE PROCEDURE insert_many_contacts_2(
     p_names TEXT[], 
     p_phones TEXT[]
@@ -32,7 +32,7 @@ BEGIN
 END;
 $$;
 
--- ❌ DELETE
+--  DELETE
 CREATE OR REPLACE PROCEDURE delete_contact_2(p_value TEXT)
 LANGUAGE plpgsql AS $$
 BEGIN

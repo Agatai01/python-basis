@@ -3,11 +3,12 @@ from db import *
 while True:
     print("\n1. Add contact")
     print("2. Show contacts")
-    print("3. Search")
-    print("4. Update")
-    print("5. Delete")
-    print("6. Import CSV")
-    print("7. Exit")
+    print("3. Search (name or phone)")
+    print("4. Update (name or phone)")
+    print("5. Delete (name or phone)")
+    print("6. Filter by prefix")
+    print("7. Import CSV")
+    print("8. Exit")
 
     choice = input("Choose: ")
 
@@ -20,20 +21,22 @@ while True:
         get_contacts()
 
     elif choice == "3":
-        name = input("Search name: ")
-        search_by_name(name)
+        value = input("Enter name or phone: ")
+        search_contact(value)
 
     elif choice == "4":
-        name = input("Name: ")
-        phone = input("New phone: ")
-        update_phone(name, phone)
+        update_contact()
 
     elif choice == "5":
-        name = input("Delete name: ")
-        delete_contact(name)
+        value = input("Enter name or phone: ")
+        delete_contact(value)
 
     elif choice == "6":
-        insert_from_csv("contacts.csv")
+        prefix = input("Enter phone prefix: ")
+        filter_by_prefix(prefix)
 
     elif choice == "7":
+        insert_from_csv("contacts.csv")
+
+    elif choice == "8":
         break

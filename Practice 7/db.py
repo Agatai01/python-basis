@@ -39,30 +39,99 @@ def get_contacts():
     conn.close()
 
 # SEARCH
-def search_by_name(name):
+def search_contact(value):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM contacts WHERE name ILIKE %s", ('%' + name + '%',))
+
+    cur.execute("""
+        SELECT * FROM contacts 
+        WHERE name LIKE %s OR phone LIKE %s
+    """, ('%' + value + '%', '%' + value + '%'))
+
     rows = cur.fetchall()
     for row in rows:
         print(row)
+
     cur.close()
     conn.close()
 
 # UPDATE
-def update_phone(name, new_phone):
+def update_contact():
     conn = connect()
     cur = conn.cursor()
-    cur.execute("UPDATE contacts SET phone=%s WHERE name=%s", (new_phone, name))
+
+    value = input("Enter name or phone to find contact: ")
+
+    # 🔍 алдымен тексереміз
+    cur.execute("SELECT * FROM contacts WHERE name=%s OR phone=%s", (value, value))
+    row = cur.fetchone()
+
+    if not row:
+        print("Contact not found!")
+        cur.close()
+        conn.close()
+        return
+
+    print("1. Update name")
+    print("2. Update phone")
+    choice = input("Choose: ")
+
+    if choice == "1":
+        new_name = input("Enter new name: ")
+        cur.execute("""
+            UPDATE contacts 
+            SET name=%s 
+            WHERE name=%s OR phone=%s
+        """, (new_name, value, value))
+
+    elif choice == "2":
+        new_phone = input("Enter new phone: ")
+        cur.execute("""
+            UPDATE contacts 
+            SET phone=%s 
+            WHERE name=%s OR phone=%s
+        """, (new_phone, value, value))
+
+    else:
+        print("Invalid choice")
+        cur.close()
+        conn.close()
+        return
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    print("Updated successfully!")
+
+# DELETE
+def delete_contact(value):
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute("""
+        DELETE FROM contacts 
+        WHERE name=%s OR phone=%s
+    """, (value, value))
+
     conn.commit()
     cur.close()
     conn.close()
 
-# DELETE
-def delete_contact(name):
+# FILTER
+def filter_by_prefix(prefix):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("DELETE FROM contacts WHERE name=%s", (name,))
-    conn.commit()
+
+    cur.execute("""
+        SELECT * FROM contacts 
+        WHERE phone LIKE %s
+    """, (prefix + '%',))
+
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+
     cur.close()
     conn.close()

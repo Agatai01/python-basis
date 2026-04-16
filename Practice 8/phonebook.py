@@ -60,7 +60,7 @@ def insert_many():
 
     while True:
         name = input("Name: ").strip()
-        if not name:  # бос қалдырса, енгізуді аяқтау
+        if not name:  
             break
         phone = input("Phone (11 digits): ").strip()
         names.append(name)
