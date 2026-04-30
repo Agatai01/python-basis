@@ -4,7 +4,7 @@ def main():
     pygame.init()
     WIDTH, HEIGHT = 800, 700
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Paint - Smooth Edition")
+    pygame.display.set_caption("Paint - Agatai Edition")
     
     clock = pygame.time.Clock()
     
